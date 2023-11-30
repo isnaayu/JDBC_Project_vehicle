@@ -1,4 +1,5 @@
 import configuration.DbConnector;
+import entity.Vehicle;
 import repository.VehicleRepo;
 import repository.impl.VehicleRepoImpl;
 
@@ -8,6 +9,34 @@ public class Main {
     public static void main(String[] args) throws SQLException{
         VehicleRepoImpl repo = new VehicleRepoImpl();
         System.out.println(repo.getAll());
+
+        Vehicle myCar = new Vehicle();
+        myCar.setModel("Tesla");
+        myCar.setBrand("Tesla v6");
+        myCar.setColor("Putih");
+        myCar.setProduction_year(2023);
+        myCar.setSale_price(300000000);
+        myCar.setStock(20);
+//        myCar.setStatus("NEW");
+
+        Vehicle vehicleToUpdate = new Vehicle();
+        vehicleToUpdate.setId(54);
+        vehicleToUpdate.setModel("Updated Model");
+        vehicleToUpdate.setBrand("Updated Brand");
+        vehicleToUpdate.setProduction_year(2022);
+        vehicleToUpdate.setColor("Updated Color");
+        vehicleToUpdate.setSale_price(400000);
+        vehicleToUpdate.setStock(10);
+
+//        Vehicle myVehicle = new Vehicle();
+//        repo.getById(52);
+        System.out.println(repo.getById(53));
+        System.out.println(repo.delete(50));
+
+
+//        repo.delete();
+        repo.update(vehicleToUpdate);
+        repo.save(myCar);
 
 
 //        try{
