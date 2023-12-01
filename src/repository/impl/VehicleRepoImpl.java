@@ -51,7 +51,7 @@ public class VehicleRepoImpl implements VehicleRepo {
     public void save(Vehicle vehicle) throws SQLException {
         Connection conn = getConn();
         conn.setAutoCommit(false);
-        String query = "INSERT INTO m_vehicle (model, brand, production_year, color, sale_price, stock) VALUES (?,?,?,?,?,?)";
+        String query = "INSERT INTO m_vehicle (model, brand, production_year, color, sale_price, stock, status) VALUES (?,?,?,?,?,?,?::vehicle_status)";
         try(PreparedStatement pr = conn.prepareStatement(query)){
 //            PreparedStatement pr = conn.prepareStatement("INSERT INTO m_vehicle (model, brand, production_year, color, sale_price, stock, status) VALUES (?,?,?,?,?,?,?)");
             pr.setString(1, vehicle.getModel());
@@ -60,6 +60,7 @@ public class VehicleRepoImpl implements VehicleRepo {
             pr.setString(4, vehicle.getColor());
             pr.setInt(5, vehicle.getSale_price());
             pr.setInt(6, vehicle.getStock());
+            pr.setString(7, vehicle.getStatus());
 
             // Execute the update
             pr.executeUpdate();
@@ -74,7 +75,7 @@ public class VehicleRepoImpl implements VehicleRepo {
     public void update(Vehicle vehicle) throws SQLException {
         Connection conn = getConn();
         conn.setAutoCommit(false);
-        String query = "UPDATE m_vehicle SET model=?, brand=?, production_year=?, color=?, sale_price=?, stock=? WHERE id=?";
+        String query = "UPDATE m_vehicle SET model=?, brand=?, production_year=?, color=?, sale_price=?, stock=?, status=?::vehicle_status WHERE id=?";
         try(PreparedStatement pr = conn.prepareStatement(query)){
 //            PreparedStatement pr = conn.prepareStatement("INSERT INTO m_vehicle (model, brand, production_year, color, sale_price, stock, status) VALUES (?,?,?,?,?,?,?)");
             pr.setString(1, vehicle.getModel());
@@ -83,7 +84,8 @@ public class VehicleRepoImpl implements VehicleRepo {
             pr.setString(4, vehicle.getColor());
             pr.setInt(5, vehicle.getSale_price());
             pr.setInt(6, vehicle.getStock());
-            pr.setInt(7, vehicle.getId());
+            pr.setString(7, vehicle.getStatus());
+            pr.setInt(8, vehicle.getId());
 
             // Execute the update
             pr.executeUpdate();
